@@ -1,77 +1,68 @@
-class library():
+class Library:
     def __init__(self,list_of_books,library_name):
         self.list_of_books=list_of_books
         self.library_name=library_name
         self.lend_data={}
 
+
+    def displaybook(self):
+        print(f"The name of our library is {self.library_name} and the books available in our library are")
         for books in self.list_of_books:
-            self.lend_data[books]=None
-    def display(self):
-        for books in self.list_of_books:
-            print(f"{books}")
-    def for_lending(self,book,reader):
-        if book in self.list_of_books:
-            if self.lend_data[book] is None:
-                self.lend_data[book]=reader
-            else:
-                print(f"SORRY! This book is lended by {self.lend_data[book]}")
+            print(books)
+    def lendbook(self,lender,book):
+        if book not in self.lend_data.keys():
+            self.lend_data.update({book:lender})
+            print("Data has been updated. You are ready to land the book")
         else:
-            print("Sorry!,BOOK doesnt exist.")
+            print(f"The book is already being used by {self.lend_data[book]}")
+    def returnbook(self,book):
+        self.lend_data.pop(book)
+        print("The book is returned sucessfully")
 
-    def return_book(self,book,reader):
-        if book in self.list_of_books:
-            if self.lend_data[book] is not None:
-                self.lend_data.pop(book)
-            else:
-                print("Sorry this book is not lended")
+    def addbook(self,book):
+        self.list_of_books.append(book)
+        print("The book is added successfully")
+    def removebook(self,book):
+        self.list_of_books.remove(book)
+        print("The book is removed succesfully")
+
+
+if __name__ == '__main__':
+    obj=Library(["Rich dad poor dad","Python","C++ basics","Chetan bhagat","Tin goyenda"],"SS Library")
+    while (True):
+        print("Choose a option for service\n")
+        print("1.Display books")
+        print("2.lend book")
+        print("3.Return book")
+        print("4.Add a book")
+        print("5.Removing a book")
+        i=int(input())
+        if i==1:
+            obj.displaybook()
+        elif i==2:
+            b = input("Enter the book name")
+            n = input("Enter your name")
+            obj.lendbook(n,b)
+        elif i==3:
+            b=input("Enter the book name which you want to return")
+            obj.returnbook(b)
+        elif i==4:
+            b=input("Enter the book name which you want to add")
+            obj.addbook(b)
+        elif i ==5:
+            p= 12345
+            pa=int(input("Enter the passcode"))
+            if pa==p:
+                b=input("Enter the book name you want to remove")
+                obj.removebook(b)
         else:
-            print("Wrong book")
-    def add_book(self,book_name):
-        self.list_of_books.append(book_name)
-        self.lend_data[book_name]=None
-    def delete_book(self,book_name):
-        self.list_of_books.remove(book_name)
-        self.lend_data.pop(book_name)
+            print("Invalid choice")
 
-def sachi():
-     book_list=["Chacha choudhury","Rich dad poor dad","An angry owl","Timefinisher","Tenet","The wolve"]
-     libraryname ="The royal library"
-     secret_key=10980
-
-     obj1=library(book_list,libraryname)
-     print(f"Welcome to {obj1.library_name} \n Q for quiting the options \nL for lending books \nR for returning the book \nA for adding the book \nD for deleting the book\n Dis for display")
-
-     Exit = False
-     while (Exit is not True):
-         _input1=input("Options::")
-
-
-         if _input1 == "Q":
-            Exit=True
-         elif _input1=="Dis":
-            obj1.display()
-         elif _input1== "L":
-             _input2=input("Enter the book name\n")
-             _input3=input("Enter the lender name\n")
-             obj1.for_lending(_input2,_input3)
-         elif _input1=="R":
-             _input2=input("Enter the book name for returning\n")
-             _input3=input("Enter the name who is going to return the book\n")
-             obj1.return_book(_input2,_input3)
-         elif _input1=="A":
-             _input2=input("Enter the book name to add\n")
-             obj1.add_book(_input2)
-
-         elif _input1=="D":
-                n=int(input("Write the secret key to delete"))
-                if n==secret_key:
-                    _input2=input("Enter the book name to delete\n")
-                    obj1.delete_book(_input2)
-                else:
-                    print("Wrong code")
-
-
-         else:
-             print("Invalid Input")
-if __name__=="__main__":
-    sachi()
+        print("Press q to quit and c to continue\n")
+        j=""
+        while(j!="q" and j!= "c"):
+            j=input()
+            if j=="q":
+                exit()
+            elif j=="c":
+                continue
